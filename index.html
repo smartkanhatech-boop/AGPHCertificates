@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7x7 Author Certificates</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:ital,wght@0,300;0,400;0,700;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .controls-container {
+            background: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        select {
+            padding: 12px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .download-btn {
+            padding: 12px 24px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .download-btn:hover { background-color: #1557b0; }
+
+        /* Certificate Container: Exactly 7x7 inches */
+        #cert-preview {
+            width: 7in;
+            height: 7in;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        [contenteditable="true"] {
+            outline: none;
+            border-bottom: 1px dashed transparent;
+            transition: border 0.3s;
+        }
+        [contenteditable="true"]:hover, [contenteditable="true"]:focus {
+            border-bottom: 1px dashed rgba(0,0,0,0.3);
+        }
+
+        .cert-inner {
+            padding: 0.5in;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo { width: 144px; height: auto; margin-bottom: 24px; }
+        .cert-title { margin: 0 0 15px 0; font-size: 28px; letter-spacing: 2px; }
+        .cert-body { font-size: 11px; line-height: 1.6; margin-bottom: 20px; text-align: justify; text-align-last: center; }
+        
+        .author-name { font-size: 22px; font-weight: 900; margin: 10px 0; text-transform: uppercase; }
+        .book-title { font-size: 24px; font-weight: 700; font-style: italic; margin: 10px 0; font-family: 'Playfair Display', serif; }
+        
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            font-size: 10px;
+            margin-top: auto;
+            border-top: 1px solid currentColor;
+            padding-top: 10px;
+        }
+
+        /* 10 INNOVATIVE THEMES */
+        .theme-classic { border: 8px solid #002147; padding: 4px; background: #fff; }
+        .theme-classic .cert-inner { border: 2px solid #b38b59; font-family: 'Playfair Display', serif; }
+        .theme-classic .cert-title { font-family: 'Cinzel', serif; color: #002147; }
+        .theme-classic .book-title { color: #b38b59; }
+
+        .theme-minimal { font-family: 'Montserrat', sans-serif; border: none; padding: 0; background: #fff;}
+        .theme-minimal .cert-inner { border: none; border-left: 6px solid #333; justify-content: flex-start; text-align: left; padding: 0.6in; }
+        .theme-minimal .cert-body { text-align: left; text-align-last: left; }
+        .theme-minimal .logo { align-self: flex-start; }
+        .theme-minimal .cert-title { font-weight: 900; align-self: flex-start; color: #000; font-family: 'Montserrat', sans-serif;}
+        .theme-minimal .book-title { color: #000; font-family: 'Playfair Display', serif;}
+        .theme-minimal .footer-info { border-top: none; justify-content: flex-start; gap: 40px; }
+
+        .theme-gold { border: none; padding: 0; background: #faf9f5; box-shadow: inset 0 0 0 15px #d4af37, inset 0 0 0 18px #fff, inset 0 0 0 20px #d4af37; }
+        .theme-gold .cert-inner { border: none; }
+        .theme-gold .cert-title { font-family: 'Cinzel', serif; color: #d4af37; font-size: 32px; }
+        .theme-gold .author-name { font-family: 'Cinzel', serif; color: #333; }
+        .theme-gold .book-title { font-family: 'Great Vibes', cursive; font-size: 34px; color: #000; text-transform: none; }
+
+        .theme-crimson { padding: 0; border: none; border-top: 25px solid #7a0016; border-bottom: 25px solid #7a0016; background: #fff; }
+        .theme-crimson .cert-inner { border: none; }
+        .theme-crimson .cert-title { color: #7a0016; font-family: 'Playfair Display', serif; }
+        .theme-crimson .book-title { color: #7a0016; }
+
+        .theme-emerald { border: none; padding: 0; background: #023020; color: #f0e6d2; }
+        .theme-emerald .cert-inner { border: 2px dashed #f0e6d2; }
+        .theme-emerald .cert-title { font-family: 'Cinzel', serif; color: #c4a45c; }
+        .theme-emerald .author-name, .theme-emerald .book-title { color: #fff; }
+
+        .theme-geo { border: none; padding: 0; background: #f0f4f8; color: #333; }
+        .theme-geo .cert-inner { border: 5px solid #0056b3; }
+        .theme-geo .cert-title { font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: 5px; color: #222; }
+        .theme-geo .book-title { color: #0056b3; font-style: normal; font-weight: 900; }
+
+        .theme-silver { padding: 0; background: #1a1a2e; color: #e0e0e0; border: 10px solid #c0c0c0; }
+        .theme-silver .cert-inner { border: none; }
+        .theme-silver .cert-title { font-family: 'Montserrat', sans-serif; font-weight: 300; letter-spacing: 8px; color: #fff; }
+        .theme-silver .author-name { color: #c0c0c0; }
+        .theme-silver .book-title { font-family: 'Playfair Display', serif; color: #fff; }
+
+        .theme-vintage { padding: 0; border: 1px solid #8b4513; background: #fdf5e6; color: #333; }
+        .theme-vintage .cert-inner { border: 4px double #8b4513; border-radius: 10px; }
+        .theme-vintage .cert-title { font-family: 'Playfair Display', serif; color: #5c3317; }
+        .theme-vintage .book-title { font-family: 'Great Vibes', cursive; font-size: 32px; color: #3b200e; }
+
+        .theme-sunset { padding: 0; background: #fff; border: 15px solid #ff7e5f; color: #333; }
+        .theme-sunset .cert-inner { border: none; }
+        .theme-sunset .cert-title { font-family: 'Montserrat', sans-serif; color: #ff7e5f; font-weight: 900; }
+        .theme-sunset .book-title { color: #ff7e5f; }
+
+        .theme-purple { padding: 0; background: #fff; border: none; border-left: 20px solid #4b0082; border-right: 20px solid #4b0082; color: #333; }
+        .theme-purple .cert-inner { border: none; border-top: 2px solid #4b0082; border-bottom: 2px solid #4b0082; }
+        .theme-purple .cert-title { font-family: 'Cinzel', serif; color: #4b0082; }
+        .theme-purple .book-title { color: #4b0082; }
+
+        /* =========================================
+           MAGIC PRINT CSS: FORCES 7x7 PDF EXPORT
+           ========================================= */
+        @media print {
+            body { 
+                background: none; 
+                padding: 0; 
+                margin: 0; 
+                display: block; 
+            }
+            .controls-container { 
+                display: none; /* Hides buttons when saving PDF */
+            }
+            #cert-preview { 
+                box-shadow: none; 
+                margin: 0; 
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            /* Forces the browser's PDF generator to output exactly 7x7 inches */
+            @page { 
+                size: 7in 7in; 
+                margin: 0; 
+            }
+            /* Ensures background colors and images print correctly */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls-container">
+        <h2>Certificate Generator</h2>
+        <p style="font-size: 14px; color: #666; margin-bottom: 20px;">Edit the text, choose a style, and click the button below. <b>Select "Save as PDF"</b> in the print dialogue.</p>
+        
+        <select id="theme-selector" onchange="changeTheme()">
+            <option value="theme-classic">1. Classic Prestige</option>
+            <option value="theme-minimal">2. Modern Minimalist</option>
+            <option value="theme-gold">3. Gold Ribbon Academic</option>
+            <option value="theme-crimson">4. Deep Crimson Seal</option>
+            <option value="theme-emerald">5. Emerald Heritage</option>
+            <option value="theme-geo">6. Geometric Innovator</option>
+            <option value="theme-silver">7. Midnight Silver</option>
+            <option value="theme-vintage">8. Vintage Parchment</option>
+            <option value="theme-sunset">9. Soft Sunset Creative</option>
+            <option value="theme-purple">10. Royal Purple Academic</option>
+        </select>
+
+        <button class="download-btn" onclick="window.print()">Save as PDF</button>
+    </div>
+
+    <div id="cert-preview" class="theme-classic">
+        <div class="cert-inner">
+            <img src="Logo.webp" alt="AG Publishing House Logo" class="logo" onerror="this.style.display='none'">
+            
+            <h1 class="cert-title">CERTIFICATE OF PUBLISHING</h1>
+            
+            <div class="cert-body">
+                This is to certify that
+                <div class="author-name" contenteditable="true">[Author’s Name]</div>
+                is the author of the work titled
+                <div class="book-title" contenteditable="true" style="margin-bottom: 5px;">“[Book/Manuscript Title]”</div>
+                
+                <div style="font-size: 11px; font-weight: bold; margin-bottom: 15px; color: inherit;">
+                    ISBN: <span contenteditable="true">978-X-XXXX-XXXX-X</span> &nbsp;|&nbsp; Date of Issue: <span id="current-date" contenteditable="true">2026</span>
+                </div>
+
+                which has been successfully reviewed through a rigorous peer-review process, accepted, and published by <strong>AG Publishing House</strong>.
+                <br><br>
+                The publication has been completed in accordance with the editorial and publication standards of the publishing house. 
+                <br><br>
+                This certificate is issued in recognition of the author’s scholarly contribution and successful publication.
+            </div>
+
+            <div class="footer-info">
+                <div style="text-align:left; padding-bottom: 5px;">
+                    <strong contenteditable="true">[Reviewer's Name]</strong><br>
+                    <span contenteditable="true">[Department / Institution]</span>
+                </div>
+                <div style="text-align:right;">
+                    <img src="Sign.png" alt="Authorised Signature" style="max-width: 120px; height: auto; max-height: 40px; margin-bottom: 5px; display: block; margin-left: auto;" onerror="this.style.display='none'">
+                    <em>AG Publishing House</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set the current year automatically
+        document.getElementById('current-date').innerText = new Date().getFullYear();
+
+        function changeTheme() {
+            const selector = document.getElementById('theme-selector');
+            const certPreview = document.getElementById('cert-preview');
+            certPreview.className = selector.value;
+        }
+    </script>
+</body>
+</html>
